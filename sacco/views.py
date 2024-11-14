@@ -1,5 +1,6 @@
+from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from sacco.models import Customer, Deposits
 
@@ -20,3 +21,18 @@ def test(request):
 
     deposit_count = Deposits.objects.count()
     return HttpResponse(f"Ok, Done. We have {customer_count} customer(s) and {deposit_count} deposit(s)")
+
+
+def customers(request):
+    # data = Customer.objects.all() #ORM select * customers
+    customer_list = Customer.objects.all().order_by('id')
+    paginator = Paginator(customer_list, 25)  # Show 10 customers per page
+
+    page = request.GET.get('page')
+    data = paginator.get_page(page)
+    return render(request, 'customers.html', {"customers": data})
+
+def delete_customer(request, customer_id):
+    customer = Customer.objects.get(id=customer_id)
+    customer.delete()
+    return redirect('customers')

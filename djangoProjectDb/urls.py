@@ -20,6 +20,7 @@ from django.urls import path
 from sacco import views
 
 urlpatterns = [
-    path('test', views.test, name='test'),
+    path('', views.customers, name='customers'),
+    path('/customers/delete/<int:customer_id>', views.delete_customer, name='delete_customer'),
     path('admin/', admin.site.urls),
 ]
