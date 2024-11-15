@@ -2,6 +2,7 @@ from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+from sacco.app_forms import CustomerForm
 from sacco.models import Customer, Deposits
 
 
@@ -36,3 +37,8 @@ def delete_customer(request, customer_id):
     customer = Customer.objects.get(id=customer_id)
     customer.delete()
     return redirect('customers')
+
+
+def add_customer(request):
+    form = CustomerForm()
+    return render(request, 'customer_form.html', {'form': form})
