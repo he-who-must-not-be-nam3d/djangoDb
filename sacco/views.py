@@ -42,3 +42,6 @@ def delete_customer(request, customer_id):
 def add_customer(request):
     form = CustomerForm()
     return render(request, 'customer_form.html', {'form': form})
+
+# pip install django-crispy-forms
+# pip install crispy-bootstrap5
